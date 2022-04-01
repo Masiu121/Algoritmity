@@ -6,7 +6,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.oxology.algoritmity.blocks.AddBlock;
+import com.oxology.algoritmity.blocks.StartBlock;
+import com.oxology.algoritmity.blocks.StopBlock;
 
 public class Algoritmity extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -30,7 +31,11 @@ public class Algoritmity extends ApplicationAdapter {
 
 	public void update() {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.O)) {
-			gameManager.addBlock(new AddBlock(100, 100));
+			gameManager.addBlock(new StartBlock(100, 100, gameManager));
+		}
+
+		if(Gdx.input.isKeyJustPressed(Input.Keys.P)) {
+			gameManager.addBlock(new StopBlock(100, 100, gameManager));
 		}
 
 		gameManager.update();

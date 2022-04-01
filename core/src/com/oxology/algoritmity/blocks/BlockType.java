@@ -1,4 +1,4 @@
-package com.oxology.algoritmity.utils;
+package com.oxology.algoritmity.blocks;
 
 public enum BlockType {
     START,
