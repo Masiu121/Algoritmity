@@ -7,6 +7,8 @@ import com.oxology.algoritmity.utils.GameObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.oxology.algoritmity.blocks.Block.BLOCK_HEIGHT;
+
 public class GameManager {
     List<GameObject> gameObjects;
     List<Block> blocks;
@@ -20,18 +22,28 @@ public class GameManager {
         batch.begin();
         for(GameObject gameObject : gameObjects) {
             if(gameObject.isVisible()) {
-                batch.draw(gameObject.getTexture(), gameObject.getX(), gameObject.getY());
                 if(gameObject instanceof Block) {
                     Block current = (Block) gameObject;
                     Block toConnect = current.getToConnect();
                     if(current.isSnapped()) {
                         if (toConnect != null) {
                             if (current.getShadow() != null) {
-                                batch.draw(current.getShadow(), toConnect.getX(), toConnect.getY() - 32);
+                                batch.draw(current.getShadow(), toConnect.getX(), toConnect.getY() - BLOCK_HEIGHT);
+
+                                int blockNumber = 2;
+                                Block nextBlock = current.getNextBlock();
+                                while(nextBlock != null) {
+                                    if(nextBlock.getShadow() != null)
+                                        batch.draw(current.getShadow(), toConnect.getX(), toConnect.getY() - BLOCK_HEIGHT*blockNumber);
+
+                                    blockNumber++;
+                                    nextBlock = nextBlock.getNextBlock();
+                                }
                             }
                         }
                     }
                 }
+                batch.draw(gameObject.getTexture(), gameObject.getX(), gameObject.getY());
             }
         }
         batch.end();
