@@ -8,6 +8,8 @@ import com.oxology.algoritmity.utils.GameObject;
 import java.util.List;
 
 public class Block extends GameObject {
+    public static int BLOCK_HEIGHT = 28;
+
     BlockType type;
     Block previous;
     Block next;
@@ -46,10 +48,10 @@ public class Block extends GameObject {
     public void checkForConnection(List<Block> blocks) {
         for(Block block : blocks) {
             if(toConnect == null) {
-                if (this.isSnapped() && block.checkForHover(0, 32) && block != this) {
+                if (this.isSnapped() && block.checkForHover(0, BLOCK_HEIGHT) && block != this && block.getNextBlock() == null) {
                     toConnect = block;
                 }
-            } else if(!toConnect.checkForHover(0, 32) && block != this) {
+            } else if(!toConnect.checkForHover(0, BLOCK_HEIGHT) && block != this) {
                 toConnect = null;
             }
         }
@@ -60,7 +62,7 @@ public class Block extends GameObject {
             toConnect = null;
 
             int moveX = getPreviousBlock().getX();
-            int moveY = getPreviousBlock().getY()-32;
+            int moveY = getPreviousBlock().getY()-BLOCK_HEIGHT;
             moveWithNextBlocks(moveX, moveY);
         }
     }
@@ -111,7 +113,7 @@ public class Block extends GameObject {
         Block nextBlock = getNextBlock();
         int blockNumber = 1;
         while(nextBlock != null) {
-            nextBlock.move(moveX, moveY-32*blockNumber);
+            nextBlock.move(moveX, moveY-BLOCK_HEIGHT*blockNumber);
             blockNumber++;
             nextBlock = nextBlock.getNextBlock();
         }
